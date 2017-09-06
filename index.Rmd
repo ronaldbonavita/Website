@@ -20,3 +20,21 @@ WHERE teamID='NYA' and yearID=1927"
 sqldf(query)
 ```
 
+```{r}
+query<-"SELECT playerID,yearID,teamID,HR FROM Batting
+WHERE teamID='NYA' and HR>=40"
+sqldf(query)
+```
+
+```{r}
+query<-"SELECT playerID,yearID,teamID,HR,SO FROM Batting
+WHERE HR>40 and SO<60"
+sqldf(query)
+```
+
+```{r}
+query<-"SELECT playerID,yearID,teamID,HR FROM Batting
+WHERE teamID='PHI' and yearID>=1970 and yearID<1980 and HR>30"
+sqldf(query)
+```
+
