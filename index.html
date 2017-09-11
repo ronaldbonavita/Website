@@ -122,7 +122,7 @@ $(document).ready(function () {
 
 <div id="flitering-columns-and-rows" class="section level2">
 <h2>Flitering Columns and Rows</h2>
-<p>With SQL, you can filter columns and rows by using SELECT and WHERE. Let’s look at an example using the Lahman database. So we should first load that database along with the package sqldf.</p>
+<p>With SQL, you can filter columns and rows by using SELECT and WHERE. Below you will find an example using the Lahman database. The first thing we’ll need to do is load that database, as well as the sqldf package.</p>
 <pre class="r"><code>library(Lahman)
 library(sqldf)</code></pre>
 <p>Suppose now I would like to see the homerun totals for the 1927 Yankees. I could write the following query:</p>
@@ -155,6 +155,7 @@ sqldf(query)</code></pre>
 ## 23 shockur01   1927    NYA  0
 ## 24 thomamy01   1927    NYA  0
 ## 25  weraju01   1927    NYA  1</code></pre>
+<p>The next example you will see is a query looking for members of the New York Yankees that have hit up to 40 homeruns. For this, we would write the following:</p>
 <pre class="r"><code>query&lt;-&quot;SELECT playerID,yearID,teamID,HR FROM Batting
 WHERE teamID='NYA' and HR&gt;=40&quot;
 sqldf(query)</code></pre>
@@ -280,6 +281,119 @@ sqldf(query)</code></pre>
 ## 34  mayswi01    NY1   1955 51
 ## 35 fieldce01    DET   1990 51
 ## 36 jonesan01    ATL   2005 51</code></pre>
+<p>In the exmaple below, we are running a query searching for players that have struck out less than 10 times, have had at least 400 at-bats, and we are ordering the list with the least strikeouts at the top. For that, we would right the following:</p>
+<pre class="r"><code>query&lt;-&quot;SELECT playerID,yearID,teamID,AB,SO FROM Batting
+WHERE SO&lt;10 and AB&gt;=400
+
+ORDER BY SO&quot;
+
+sqldf(query)</code></pre>
+<pre><code>##     playerID yearID teamID  AB SO
+## 1  doyleja01   1894    NY1 422  3
+## 2  seweljo01   1932    NYA 503  3
+## 3  seweljo01   1925    CLE 608  4
+## 4  seweljo01   1929    CLE 578  4
+## 5  seweljo01   1933    NYA 524  4
+## 6   wardjo01   1893    NY1 588  5
+## 7  holloch01   1922    CHN 592  5
+## 8  mcinnst01   1922    CLE 537  5
+## 9  wanerll01   1936    PIT 414  5
+## 10 wrighge01   1875    BS1 408  6
+## 11 broutda01   1889    BSN 485  6
+## 12 keelewi01   1894    BLN 590  6
+## 13  wardjo01   1894    NY1 540  6
+## 14 quinnjo02   1895    SLN 543  6
+## 15 mcinnst01   1924    BSN 581  6
+## 16 seweljo01   1926    CLE 578  6
+## 17  wardjo01   1889    NY1 479  7
+## 18 crossla01   1893    PHI 415  7
+## 19 quinnjo02   1893    SLN 547  7
+## 20 crossla01   1894    PHI 529  7
+## 21 vaughfa01   1896    CIN 433  7
+## 22 cochrmi01   1927    PHA 432  7
+## 23 seweljo01   1927    CLE 569  7
+## 24 traynpi01   1929    PIT 540  7
+## 25 muelldo01   1956    NY1 453  7
+## 26 connoro01   1885    NY1 455  8
+## 27 glassja01   1887    IN3 483  8
+## 28 glassja01   1890    NY1 512  8
+## 29 donovpa01   1893    PIT 499  8
+## 30 dungasa01   1893    CHN 465  8
+## 31 pinknge01   1893    LS3 446  8
+## 32 brodist01   1894    BLN 573  8
+## 33 quinnjo02   1894    SLN 405  8
+## 34 bierblo01   1895    PIT 466  8
+## 35 crossla01   1895    PHI 535  8
+## 36   hoydu01   1895    CIN 429  8
+## 37 roushed01   1921    CIN 418  8
+## 38 collied01   1923    CHA 505  8
+## 39 collied01   1925    CHA 425  8
+## 40 speaktr01   1927    WS1 523  8
+## 41 cochrmi01   1929    PHA 514  8
+## 42 seweljo01   1931    NYA 484  8
+## 43 wanerll01   1933    PIT 500  8
+## 44 verbaem01   1947    PHI 540  8
+## 45 ansonca01   1883    CHN 413  9
+## 46 broutda01   1887    DTN 500  9
+## 47   hoydu01   1893    WAS 564  9
+## 48 bierblo01   1894    PIT 525  9
+## 49 broutda01   1894    BLN 525  9
+## 50 milledo01   1894    SLN 481  9
+## 51 keelewi01   1896    BLN 544  9
+## 52 mckeaed01   1896    CL4 571  9
+## 53 speaktr01   1918    CLE 471  9
+## 54  dealch01   1921    CHN 422  9
+## 55 mcinnst01   1921    BOS 584  9
+## 56 severha01   1921    SLA 472  9
+## 57  highan01   1926    BSN 476  9
+## 58 summaho01   1926    CLE 581  9
+## 59 seweljo01   1928    CLE 588  9
+## 60  ricesa01   1929    WS1 616  9
+## 61 leachfr01   1931    NY1 515  9
+## 62 busched01   1945    PHA 416  9
+## 63 holmeto01   1945    BSN 636  9
+## 64 boudrlo01   1948    CLE 560  9
+## 65 mitchda01   1952    CLE 511  9</code></pre>
+</div>
+<div id="aggregation" class="section level2">
+<h2>Aggregation</h2>
+<p>Sometimes when working with SQL, there will be a need to condense results to the minimum possible output. Below you will find a couple examples of how we can do this, with my examples using sum(HR) and avg(HR).</p>
+<pre class="r"><code>query&lt;-&quot;SELECT playerID,sum(HR) FROM Batting
+GROUP BY playerID
+HAVING sum(HR)&gt;=600
+ORDER BY sum(HR) DESC&quot;
+
+sqldf(query)</code></pre>
+<pre><code>##    playerID sum(HR)
+## 1 bondsba01     762
+## 2 aaronha01     755
+## 3  ruthba01     714
+## 4 rodrial01     696
+## 5  mayswi01     660
+## 6 griffke02     630
+## 7 thomeji01     612
+## 8  sosasa01     609</code></pre>
+<pre class="r"><code>query&lt;-&quot;SELECT playerID,avg(HR) FROM Batting
+GROUP BY playerID
+HAVING avg(HR)&gt;30
+ORDER BY avg(HR) DESC&quot;
+
+sqldf(query)</code></pre>
+<pre><code>##     playerID  avg(HR)
+## 1  pujolal01 36.93750
+## 2  bondsba01 34.63636
+## 3  mcgwima01 34.29412
+## 4  kinerra01 33.54545
+## 5  aaronha01 32.82609
+## 6  bryankr01 32.50000
+## 7   ruthba01 32.45455
+## 8   sosasa01 32.05263
+## 9  cabremi01 31.85714
+## 10 belleal01 31.75000
+## 11 rodrial01 31.63636
+## 12 schmimi01 30.44444
+## 13 abreujo02 30.33333</code></pre>
+<p>As you can see above, we queried any players that have 600 or more homeruns for their whole careers, putting them in order from greatest to least. In the second example, we were looking for players who in their careers averaged more than 30 homeruns, also in descending order.</p>
 </div>
 
 

@@ -5,7 +5,7 @@ output: html_document
 
 ## Flitering Columns and Rows
 
-With SQL, you can filter columns and rows by using SELECT and WHERE. Let's look at an example using the Lahman database. So we should first load that database along with the package sqldf.
+With SQL, you can filter columns and rows by using SELECT and WHERE. Below you will find an example using the Lahman database. The first thing we'll need to do is load that database, as well as the sqldf package.
 
 ```{r message=FALSE, warning=FALSE}
 library(Lahman)
@@ -19,6 +19,8 @@ query<-"SELECT playerID,yearID,teamID,HR FROM Batting
 WHERE teamID='NYA' and yearID=1927"
 sqldf(query)
 ```
+
+The next example you will see is a query looking for members of the New York Yankees that have hit up to 40 homeruns. For this, we would write the following:
 
 ```{r}
 query<-"SELECT playerID,yearID,teamID,HR FROM Batting
@@ -51,3 +53,37 @@ ORDER BY HR DESC"
 sqldf(query)
 ```
 
+In the exmaple below, we are running a query searching for players that have struck out less than 10 times, have had at least 400 at-bats, and we are ordering the list with the least strikeouts at the top. For that, we would right the following:
+
+```{r}
+query<-"SELECT playerID,yearID,teamID,AB,SO FROM Batting
+WHERE SO<10 and AB>=400
+
+ORDER BY SO"
+
+sqldf(query)
+```
+
+## Aggregation
+
+Sometimes when working with SQL, there will be a need to condense results to the minimum possible output. Below you will find a couple examples of how we can do this, with my examples using sum(HR) and avg(HR).
+
+```{r}
+query<-"SELECT playerID,sum(HR) FROM Batting
+GROUP BY playerID
+HAVING sum(HR)>=600
+ORDER BY sum(HR) DESC"
+
+sqldf(query)
+```
+
+```{r}
+query<-"SELECT playerID,avg(HR) FROM Batting
+GROUP BY playerID
+HAVING avg(HR)>30
+ORDER BY avg(HR) DESC"
+
+sqldf(query)
+```
+
+As you can see above, we queried any players that have 600 or more homeruns for their whole careers, putting them in order from greatest to least. In the second example, we were looking for players who in their careers averaged more than 30 homeruns, also in descending order.
