@@ -87,3 +87,35 @@ sqldf(query)
 ```
 
 As you can see above, we queried any players that have 600 or more homeruns for their whole careers, putting them in order from greatest to least. In the second example, we were looking for players who in their careers averaged more than 30 homeruns, also in descending order.
+
+## Joins
+
+Sometimes when working with SQL, there are instances where you want to join multiple tables to come together as one output. Below I will post a couple examples of code used to go about this.
+
+```{r}
+query<-"SELECT nameFirst,nameLast,teamID,yearID,HR
+FROM Batting INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE Batting.playerID='ruthba01'"
+
+sqldf(query)
+```
+
+```{r}
+query<-"SELECT nameFirst,nameLast,teamID,yearID,HR
+FROM Batting INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE HR>50
+ORDER BY HR DESC"
+sqldf(query)
+```
+
+```{r}
+query<-"SELECT playerID,name,Batting.yearID,Batting.HR
+FROM Batting INNER JOIN Teams
+ON Batting.teamID=Teams.teamID and Batting.yearID=Teams.yearID
+WHERE playerID='ruthba01'"
+sqldf(query)
+```
+
+In a future example, we will go over how to join three tables together.
