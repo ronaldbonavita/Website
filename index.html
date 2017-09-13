@@ -427,6 +427,8 @@ sqldf(query)</code></pre>
 ## 20      Babe     Ruth    NYA   1933 34
 ## 21      Babe     Ruth    NYA   1934 22
 ## 22      Babe     Ruth    BSN   1935  6</code></pre>
+<p>In the example above, we ran a query looking for seasons where Babe Ruth played baseball, joining the Master and Batting tables to come to our result.</p>
+<p>In the example below, we have linked the Batting and Master tables again to find instances of players hitting more than 50 homeruns, including first/last name, team, year, and homerun total.</p>
 <pre class="r"><code>query&lt;-&quot;SELECT nameFirst,nameLast,teamID,yearID,HR
 FROM Batting INNER JOIN Master
 ON Batting.playerID=Master.playerID
@@ -470,6 +472,7 @@ sqldf(query)</code></pre>
 ## 34    Willie      Mays    NY1   1955 51
 ## 35     Cecil   Fielder    DET   1990 51
 ## 36    Andruw     Jones    ATL   2005 51</code></pre>
+<p>For the final of the first set of join queries, we searched for results concerning Babe Ruth, his team name, year played, and homerun totals.</p>
 <pre class="r"><code>query&lt;-&quot;SELECT playerID,name,Batting.yearID,Batting.HR
 FROM Batting INNER JOIN Teams
 ON Batting.teamID=Teams.teamID and Batting.yearID=Teams.yearID
@@ -498,7 +501,6 @@ sqldf(query)</code></pre>
 ## 20 ruthba01 New York Yankees   1933 34
 ## 21 ruthba01 New York Yankees   1934 22
 ## 22 ruthba01    Boston Braves   1935  6</code></pre>
-<p>In a future example, we will go over how to join three tables together.</p>
 </div>
 <div id="joins-update-september-13-2017" class="section level2">
 <h2>JOINS UPDATE September 13, 2017</h2>

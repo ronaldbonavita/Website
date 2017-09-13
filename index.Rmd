@@ -100,7 +100,9 @@ WHERE Batting.playerID='ruthba01'"
 
 sqldf(query)
 ```
+In the example above, we ran a query looking for seasons where Babe Ruth played baseball, joining the Master and Batting tables to come to our result.
 
+In the example below, we have linked the Batting and Master tables again to find instances of players hitting more than 50 homeruns, including first/last name, team, year, and homerun total.
 ```{r}
 query<-"SELECT nameFirst,nameLast,teamID,yearID,HR
 FROM Batting INNER JOIN Master
@@ -110,6 +112,7 @@ ORDER BY HR DESC"
 sqldf(query)
 ```
 
+For the final of the first set of join queries, we searched for results concerning Babe Ruth, his team name, year played, and homerun totals.
 ```{r}
 query<-"SELECT playerID,name,Batting.yearID,Batting.HR
 FROM Batting INNER JOIN Teams
@@ -117,8 +120,6 @@ ON Batting.teamID=Teams.teamID and Batting.yearID=Teams.yearID
 WHERE playerID='ruthba01'"
 sqldf(query)
 ```
-
-In a future example, we will go over how to join three tables together.
 
 ## JOINS UPDATE September 13, 2017
 
