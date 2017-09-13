@@ -119,3 +119,20 @@ sqldf(query)
 ```
 
 In a future example, we will go over how to join three tables together.
+
+## JOINS UPDATE September 13, 2017
+
+As stated in the previous update of the website, I now have an instance of code where you would be able to link three tables together. The example is as follows:
+
+```{r}
+query<-"SELECT nameFirst,nameLast,name,Batting.yearID,Batting.HR
+FROM Batting INNER JOIN Teams
+ON Batting.teamID=Teams.teamID and Batting.yearID=Teams.yearID
+INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE Batting.playerID='ruthba01'"
+
+sqldf(query)
+```
+
+As you can see above, there are two INNER JOIN commands in the syntax of our code, one of which links the Teams table and the other linking the Master table, making connections with teamID, yearID, and playerID.

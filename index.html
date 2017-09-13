@@ -500,6 +500,42 @@ sqldf(query)</code></pre>
 ## 22 ruthba01    Boston Braves   1935  6</code></pre>
 <p>In a future example, we will go over how to join three tables together.</p>
 </div>
+<div id="joins-update-september-13-2017" class="section level2">
+<h2>JOINS UPDATE September 13, 2017</h2>
+<p>As stated in the previous update of the website, I now have an instance of code where you would be able to link three tables together. The example is as follows:</p>
+<pre class="r"><code>query&lt;-&quot;SELECT nameFirst,nameLast,name,Batting.yearID,Batting.HR
+FROM Batting INNER JOIN Teams
+ON Batting.teamID=Teams.teamID and Batting.yearID=Teams.yearID
+INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE Batting.playerID='ruthba01'&quot;
+
+sqldf(query)</code></pre>
+<pre><code>##    nameFirst nameLast             name yearID HR
+## 1       Babe     Ruth   Boston Red Sox   1914  0
+## 2       Babe     Ruth   Boston Red Sox   1915  4
+## 3       Babe     Ruth   Boston Red Sox   1916  3
+## 4       Babe     Ruth   Boston Red Sox   1917  2
+## 5       Babe     Ruth   Boston Red Sox   1918 11
+## 6       Babe     Ruth   Boston Red Sox   1919 29
+## 7       Babe     Ruth New York Yankees   1920 54
+## 8       Babe     Ruth New York Yankees   1921 59
+## 9       Babe     Ruth New York Yankees   1922 35
+## 10      Babe     Ruth New York Yankees   1923 41
+## 11      Babe     Ruth New York Yankees   1924 46
+## 12      Babe     Ruth New York Yankees   1925 25
+## 13      Babe     Ruth New York Yankees   1926 47
+## 14      Babe     Ruth New York Yankees   1927 60
+## 15      Babe     Ruth New York Yankees   1928 54
+## 16      Babe     Ruth New York Yankees   1929 46
+## 17      Babe     Ruth New York Yankees   1930 49
+## 18      Babe     Ruth New York Yankees   1931 46
+## 19      Babe     Ruth New York Yankees   1932 41
+## 20      Babe     Ruth New York Yankees   1933 34
+## 21      Babe     Ruth New York Yankees   1934 22
+## 22      Babe     Ruth    Boston Braves   1935  6</code></pre>
+<p>As you can see above, there are two INNER JOIN commands in the syntax of our code, one of which links the Teams table and the other linking the Master table, making connections with teamID, yearID, and playerID.</p>
+</div>
 
 
 
