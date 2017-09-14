@@ -24,7 +24,7 @@ The next example you will see is a query looking for members of the New York Yan
 
 ```{r}
 query<-"SELECT playerID,yearID,teamID,HR FROM Batting
-WHERE teamID='NYA' and HR>=40"
+WHERE teamID='NYA' and HR<=40"
 sqldf(query)
 ```
 
@@ -53,7 +53,7 @@ ORDER BY HR DESC"
 sqldf(query)
 ```
 
-In the exmaple below, we are running a query searching for players that have struck out less than 10 times, have had at least 400 at-bats, and we are ordering the list with the least strikeouts at the top. For that, we would right the following:
+In the exmaple below, we are running a query searching for players that have struck out less than 10 times, have had at least 400 at-bats, and we are ordering the list with the least strikeouts at the top. For that, we would write the following:
 
 ```{r}
 query<-"SELECT playerID,yearID,teamID,AB,SO FROM Batting
