@@ -24,7 +24,7 @@ The next example you will see is a query looking for members of the New York Yan
 
 ```{r}
 query<-"SELECT playerID,yearID,teamID,HR FROM Batting
-WHERE teamID='NYA' and HR<=40"
+WHERE teamID='NYA' and HR>=40"
 sqldf(query)
 ```
 
